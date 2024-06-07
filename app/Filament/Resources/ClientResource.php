@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\InterfacingResource\Pages;
-use App\Filament\Resources\InterfacingResource\RelationManagers;
-use App\Models\Interfacing;
+use App\Filament\Resources\ClientResource\Pages;
+use App\Filament\Resources\ClientResource\RelationManagers;
+use App\Models\Client;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,22 +13,27 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class InterfacingResource extends Resource
+class ClientResource extends Resource
 {
-    protected static ?string $model = Interfacing::class;
+    protected static ?string $model = Client::class;
 
-    protected static ?string $navigationIcon = 'heroicon-s-signal';
+    protected static ?string $navigationIcon = 'heroicon-s-users';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('interfacing_name')
+                Forms\Components\TextInput::make('client_name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Textarea::make('description')
+                Forms\Components\TextInput::make('ip_server')
                     ->required()
-                    ->columnSpanFull(),
+                    ->maxLength(255),
+                Forms\Components\Toggle::make('is_client_new')
+                    ->required(),
+                Forms\Components\Select::make('interfacing_id')
+                    ->relationship('interfacing', 'interfacing_name')
+                    ->required(),
             ]);
     }
 
@@ -36,10 +41,14 @@ class InterfacingResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('interfacing_name')
+                Tables\Columns\TextColumn::make('client_name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('description')
-                    ->searchable(),
+                Tables\Columns\IconColumn::make('is_client_new')
+                    ->boolean(),
+                Tables\Columns\TextColumn::make('ip_server')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('interfacing.interfacing_name')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -76,9 +85,9 @@ class InterfacingResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListInterfacings::route('/'),
-            'create' => Pages\CreateInterfacing::route('/create'),
-            'edit' => Pages\EditInterfacing::route('/{record}/edit'),
+            'index' => Pages\ListClients::route('/'),
+            'create' => Pages\CreateClient::route('/create'),
+            'edit' => Pages\EditClient::route('/{record}/edit'),
         ];
     }
 }

@@ -9,8 +9,5 @@ class Interfacing extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'interfacingName',
-        'description'
-    ];
+    protected $guarded = [];
 }
