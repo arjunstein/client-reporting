@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('interfacings', function (Blueprint $table) {
+        Schema::create('clients', function (Blueprint $table) {
             $table->id();
-            $table->string('interfacing_name');
-            $table->text('description');
+            $table->string('client_name');
+            $table->boolean('is_client_new')->default(false);
+            $table->foreignId('interfacing_id')->constrained('interfacings')->cascadeOnDelete();
+            $table->string('ip_server');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('interfacings');
+        Schema::dropIfExists('clients');
     }
 };
