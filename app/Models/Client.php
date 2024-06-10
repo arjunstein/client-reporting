@@ -29,4 +29,10 @@ class Client extends Model
             $query->where('is_client_new', true);
         });
     }
+
+    public static function clientsWithPendingRequests()
+    {
+        $requestsNotDone = Request::where('status', '!=', 'Done')->pluck('client_id');
+        return self::whereIn('id', $requestsNotDone)->pluck('client_name', 'id');
+    }
 }

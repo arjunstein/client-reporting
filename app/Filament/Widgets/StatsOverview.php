@@ -16,7 +16,7 @@ class StatsOverview extends BaseWidget
         $total_request = Request::countRequestNotDone();
         $total_solved = Solving::countSolvingDone();
         $new_client = Client::Newclient()->count();
-        $percentage_new_client = ($new_client / $total_client) * 100;
+        $percentage_new_client = ($total_client != 0) ? ($new_client / $total_client) * 100 : 0;
 
         return [
             Stat::make('Total Client', $total_client),
