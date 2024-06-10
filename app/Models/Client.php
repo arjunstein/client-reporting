@@ -17,4 +17,16 @@ class Client extends Model
     {
         return $this->belongsTo(Interfacing::class);
     }
+
+    public static function countClient()
+    {
+        return self::query()->count();
+    }
+
+    public function scopeNewclient($query)
+    {
+        return $query->whereHas('interfacing', function ($query) {
+            $query->where('is_client_new', true);
+        });
+    }
 }

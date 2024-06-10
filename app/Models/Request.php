@@ -20,4 +20,9 @@ class Request extends Model
     {
         return $this->hasMany(Solving::class);
     }
+
+    public static function countRequestNotDone()
+    {
+        return self::query()->where('status', 'Done')->count();
+    }
 }
