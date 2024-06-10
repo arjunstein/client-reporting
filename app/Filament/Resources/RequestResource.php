@@ -2,10 +2,10 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ClientResource\Pages;
-use App\Filament\Resources\ClientResource\RelationManagers;
+use App\Filament\Resources\RequestResource\Pages;
+use App\Filament\Resources\RequestResource\RelationManagers;
 use App\Models\Client;
-use App\Models\Interfacing;
+use App\Models\Request;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -14,28 +14,36 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ClientResource extends Resource
+class RequestResource extends Resource
 {
-    protected static ?string $model = Client::class;
+    protected static ?string $model = Request::class;
 
-    protected static ?string $navigationIcon = 'heroicon-s-users';
+    protected static ?string $navigationIcon = 'heroicon-m-arrow-left-on-rectangle';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('client_name')
+                Forms\Components\Textarea::make('issue')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('ip_server')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Toggle::make('is_client_new')
-                    ->label('Is new client?'),
-                Forms\Components\Select::make('interfacing_id')
-                    ->relationship('interfacing', 'interfacing_name')
-                    ->options(Interfacing::all()->pluck('interfacing_name', 'id'))
+                Forms\Components\Select::make('client_id')
+                    ->relationship('client', 'client_name')
+                    ->options(Client::all()->pluck('client_name', 'id'))
+                    ->searchable()
                     ->required(),
+                Forms\Components\Select::make('status')
+                    ->options([
+                        'In Queue' => 'In Queue',
+                        'On Process' => 'On Process',
+                        'Wait Client Confirm' => 'Wait Client Confirm',
+                        'Done' => 'Done',
+                    ])
+                    ->native(false)
+                    ->required(),
+                Forms\Components\DatePicker::make('request_date')
+                    ->required(),
+                Forms\Components\DatePicker::make('finish_date'),
             ]);
     }
 
@@ -43,13 +51,16 @@ class ClientResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('client_name')
+                Tables\Columns\TextColumn::make('issue')
                     ->searchable(),
-                Tables\Columns\IconColumn::make('is_client_new')
-                    ->boolean(),
-                Tables\Columns\TextColumn::make('ip_server')
+                Tables\Columns\TextColumn::make('client.client_name')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('interfacing.interfacing_name')
+                Tables\Columns\TextColumn::make('status'),
+                Tables\Columns\TextColumn::make('request_date')
+                    ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('finish_date')
+                    ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -87,9 +98,9 @@ class ClientResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListClients::route('/'),
-            'create' => Pages\CreateClient::route('/create'),
-            'edit' => Pages\EditClient::route('/{record}/edit'),
+            'index' => Pages\ListRequests::route('/'),
+            'create' => Pages\CreateRequest::route('/create'),
+            'edit' => Pages\EditRequest::route('/{record}/edit'),
         ];
     }
 }
