@@ -24,9 +24,11 @@ class InterfacingResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('interfacing_name')
+                    ->label('Interfacing Name')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Textarea::make('description')
+                    ->label('Description')
                     ->required()
                     ->columnSpanFull(),
             ]);
@@ -37,8 +39,10 @@ class InterfacingResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('interfacing_name')
+                    ->label('Interfacing')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
+                    ->label('Description')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

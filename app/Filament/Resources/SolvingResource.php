@@ -30,6 +30,7 @@ class SolvingResource extends Resource
                     ->relationship('client', 'client_name')
                     ->label('Client')
                     ->options(Client::all()->pluck('client_name', 'id'))
+                    ->options((Request::all())->whereNotIn('status', 'Done')->pluck('client.client_name', 'id'))
                     ->searchable()
                     ->required(),
                 Forms\Components\Select::make('developed_id')
@@ -39,9 +40,9 @@ class SolvingResource extends Resource
                     ->searchable()
                     ->required(),
                 Forms\Components\Select::make('request_id')
-                    ->relationship('request_r', 'issue')
+                    ->relationship('request', 'issue')
                     ->label('Issue')
-                    ->options(Request::all()->pluck('issue', 'id'))
+                    ->options(Request::all()->whereNotIn('status', 'Done')->pluck('issue', 'id'))
                     ->searchable()
                     ->required(),
                 Forms\Components\Textarea::make('resolving')
