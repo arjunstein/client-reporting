@@ -29,8 +29,7 @@ class SolvingResource extends Resource
                 Forms\Components\Select::make('client_id')
                     ->relationship('client', 'client_name')
                     ->label('Client')
-                    ->options(Client::all()->pluck('client_name', 'id'))
-                    ->options((Request::all())->whereNotIn('status', 'Done')->pluck('client.client_name', 'id'))
+                    ->options(Client::clientsWithPendingRequests())
                     ->searchable()
                     ->required(),
                 Forms\Components\Select::make('developed_id')

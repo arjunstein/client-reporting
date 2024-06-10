@@ -25,4 +25,9 @@ class Request extends Model
     {
         return self::query()->where('status', 'Done')->count();
     }
+
+    public static function notDoneRequests()
+    {
+        return self::where('status', '!=', 'Done')->pluck('issue', 'id');
+    }
 }
