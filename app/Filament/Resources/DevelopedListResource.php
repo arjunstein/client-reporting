@@ -24,9 +24,11 @@ class DevelopedListResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('item_name')
+                    ->label('Item')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Textarea::make('description')
+                    ->label('Description')
                     ->columnSpanFull(),
             ]);
     }
@@ -36,8 +38,10 @@ class DevelopedListResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('item_name')
+                    ->label('Item')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
+                    ->label('Description')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

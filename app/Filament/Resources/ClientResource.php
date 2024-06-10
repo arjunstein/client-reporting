@@ -25,14 +25,17 @@ class ClientResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('client_name')
+                    ->label('Client')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('ip_server')
+                    ->label('IP Server')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Toggle::make('is_client_new')
                     ->label('Is new client?'),
                 Forms\Components\Select::make('interfacing_id')
+                    ->label('Interfacing')
                     ->relationship('interfacing', 'interfacing_name')
                     ->options(Interfacing::all()->pluck('interfacing_name', 'id'))
                     ->required(),
@@ -44,12 +47,16 @@ class ClientResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('client_name')
+                    ->label('Client')
                     ->searchable(),
                 Tables\Columns\IconColumn::make('is_client_new')
+                    ->label('New Client')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('ip_server')
+                    ->label('IP Server')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('interfacing.interfacing_name')
+                    ->label('Interfacing')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
