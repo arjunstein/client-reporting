@@ -25,4 +25,9 @@ class Solving extends Model
     {
         return $this->belongsTo(Client::class);
     }
+
+    public static function countSolvingDone()
+    {
+        return self::query()->count();
+    }
 }
