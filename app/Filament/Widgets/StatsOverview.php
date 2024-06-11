@@ -5,17 +5,29 @@ namespace App\Filament\Widgets;
 use App\Models\Client;
 use App\Models\Request;
 use App\Models\Solving;
+use Carbon\Carbon;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
+use Filament\Widgets\Concerns\InteractsWithPageFilters;
 
 class StatsOverview extends BaseWidget
 {
+    use InteractsWithPageFilters;
+
     protected function getStats(): array
     {
-        $total_client = Client::countClient();
-        $total_request = Request::countRequestNotDone();
-        $total_solved = Solving::countSolvingDone();
-        $new_client = Client::Newclient()->count();
+        $startDate = !is_null($this->filters['startDate'] ?? null) ?
+            Carbon::parse($this->filters['startDate'])->startOfDay() :
+            null;
+
+        $endDate = !is_null($this->filters['endDate'] ?? null) ?
+            Carbon::parse($this->filters['endDate'])->endOfDay() :
+            now()->endOfDay();
+
+        $total_client = Client::whereBetween('created_at', [$startDate, $endDate])->count();
+        $total_request = Request::countRequestNotDone()->whereBetween('created_at', [$startDate, $endDate])->count();
+        $total_solved = Solving::countSolvingDone()->whereBetween('created_at', [$startDate, $endDate])->count();
+        $new_client = Client::Newclient()->whereBetween('created_at', [$startDate, $endDate])->count();
         $percentage_new_client = ($total_client != 0) ? ($new_client / $total_client) * 100 : 0;
 
         return [

@@ -5,6 +5,7 @@ namespace App\Filament\Widgets;
 use App\Models\DevelopedList;
 use App\Models\Request;
 use App\Models\Solving;
+use Carbon\Carbon;
 use Filament\Widgets\ChartWidget;
 use Flowframe\Trend\Trend;
 use Flowframe\Trend\TrendValue;
@@ -15,33 +16,32 @@ class W_YearlyDevelopedChart extends ChartWidget
 
     public function __construct()
     {
-        self::$heading = 'Most developed in ' . now()->year;
+        $year = \Carbon\Carbon::now()->year;
+        $month = \Carbon\Carbon::now()->format('F');
+        self::$heading = 'Most developed in ' . $month . ' ' . $year;
     }
 
     protected function getData(): array
     {
-        $data = Solving::getYearlyDevelopedData();
-
+        $data = Solving::getAllDevelopedData();
         $developedList = DevelopedList::pluck('item_name', 'id');
 
-        $datasets = [];
         $labels = [];
         $counts = [];
-
         foreach ($data as $entry) {
-            $labels[] = $developedList[$entry->developed_id] ?? ''; // Gunakan nama item atau 'Unknown' jika tidak ditemukan
+            $labels[] = $developedList[$entry->developed_id] ?? 'Unknown';
             $counts[] = $entry->count;
         }
 
-        $datasets[] = [
-            'label' => $labels,
-            'data' => $counts,
-            'backgroundColor' => '#36A2EB',
-            'borderColor' => '#9BD0F5',
-        ];
-
         return [
-            'datasets' => $datasets,
+            'datasets' => [
+                [
+                    'label' => 'Developed',
+                    'data' => $counts,
+                    'backgroundColor' => '#36A2EB',
+                    'borderColor' => '#9BD0F5',
+                ],
+            ],
             'labels' => $labels,
         ];
     }

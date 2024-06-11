@@ -23,7 +23,7 @@ class Request extends Model
 
     public static function countRequestNotDone()
     {
-        return self::query()->where('status', 'Done')->count();
+        return self::query()->where('status', '!=', 'Done');
     }
 
     public static function notDoneRequests()

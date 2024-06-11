@@ -33,10 +33,10 @@ class Solving extends Model
 
     public static function countSolvingDone()
     {
-        return self::query()->count();
+        return self::query();
     }
 
-    public static function getYearlyDevelopedData(): Collection
+    public static function getAllDevelopedData(): Collection
     {
         return self::select(
             'developed_id',
