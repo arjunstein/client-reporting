@@ -20,6 +20,7 @@ class W_MonthlyRequestChart extends ChartWidget
     protected function getData(): array
     {
         $data = Trend::model(Request::class)
+            ->dateColumn('request_date')
             ->between(
                 start: now()->startOfYear(),
                 end: now()->endOfYear(),
