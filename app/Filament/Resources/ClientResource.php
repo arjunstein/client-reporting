@@ -20,6 +20,8 @@ class ClientResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-s-users';
 
+    protected static ?int $navigationSort = 3;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -39,6 +41,8 @@ class ClientResource extends Resource
                     ->relationship('interfacing', 'interfacing_name')
                     ->options(Interfacing::all()->pluck('interfacing_name', 'id'))
                     ->required(),
+                Forms\Components\DateTimePicker::make('created_at')
+                    ->label('Created At')
             ]);
     }
 
@@ -54,9 +58,11 @@ class ClientResource extends Resource
                     ->boolean(),
                 Tables\Columns\TextColumn::make('ip_server')
                     ->label('IP Server')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('interfacing.interfacing_name')
                     ->label('Interfacing')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
