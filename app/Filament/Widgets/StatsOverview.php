@@ -17,12 +17,12 @@ class StatsOverview extends BaseWidget
     protected function getStats(): array
     {
         $startDate = !is_null($this->filters['startDate'] ?? null) ?
-            Carbon::parse($this->filters['startDate'])->startOfDay() :
+            Carbon::parse($this->filters['startDate']) :
             null;
 
         $endDate = !is_null($this->filters['endDate'] ?? null) ?
-            Carbon::parse($this->filters['endDate'])->endOfDay() :
-            now()->endOfDay();
+            Carbon::parse($this->filters['endDate']) :
+            now();
 
         $total_client = Client::whereBetween('created_at', [$startDate, $endDate])->count();
         $total_request = Request::countRequestNotDone()->whereBetween('created_at', [$startDate, $endDate])->count();
