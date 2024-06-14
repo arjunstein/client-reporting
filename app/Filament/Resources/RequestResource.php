@@ -46,6 +46,7 @@ class RequestResource extends Resource
                 Forms\Components\DatePicker::make('request_date')
                     ->required(),
                 Forms\Components\DatePicker::make('finish_date'),
+                Forms\Components\DatePicker::make('created_at'),
             ]);
     }
 
@@ -67,7 +68,7 @@ class RequestResource extends Resource
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()

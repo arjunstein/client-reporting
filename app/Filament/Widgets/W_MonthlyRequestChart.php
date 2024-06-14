@@ -14,7 +14,7 @@ class W_MonthlyRequestChart extends ChartWidget
 
     public function __construct()
     {
-        self::$heading = 'Total request in ' . now()->year;
+        self::$heading = 'Total request';
     }
 
     protected function getData(): array
@@ -22,7 +22,7 @@ class W_MonthlyRequestChart extends ChartWidget
         $data = Trend::model(Request::class)
             ->dateColumn('request_date')
             ->between(
-                start: now()->startOfYear(),
+                start: now()->startOfYear()->subYears(2),
                 end: now()->endOfYear(),
             )
             ->perMonth()
