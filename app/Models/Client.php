@@ -18,11 +18,9 @@ class Client extends Model
         return $this->belongsTo(Interfacing::class);
     }
 
-    public function scopeNewclient($query)
+    public static function getNewClient()
     {
-        return $query->whereHas('interfacing', function ($query) {
-            $query->where('is_client_new', true);
-        });
+        return self::where('is_client_new', true)->get();
     }
 
     public static function clientsWithPendingRequests()

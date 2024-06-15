@@ -24,18 +24,31 @@ class StatsOverview extends BaseWidget
             Carbon::parse($this->filters['endDate']) :
             now();
 
-        $total_client = Client::whereBetween('created_at', [$startDate, $endDate])->count();
-        $total_request = Request::countRequestNotDone()->whereBetween('created_at', [$startDate, $endDate])->count();
-        $total_solved = Solving::countSolvingDone()->whereBetween('created_at', [$startDate, $endDate])->count();
-        $new_client = Client::Newclient()->whereBetween('created_at', [$startDate, $endDate])->count();
-        $percentage_new_client = ($total_client != 0) ? ($new_client / $total_client) * 100 : 0;
+        $all_client = Client::count();
+        $need_resolve = Request::countRequestNotDone()->count();
+        $total_solved = Solving::countSolvingDone()->count();
+        $new_client = Client::getNewClient()->count();
+
+        if (is_null($startDate)) {
+            $total_client_filter = $all_client;
+            $total_filter_need_resolve = $need_resolve;
+            $total_filter_solved = $total_solved;
+            $total_filter_new_client = $new_client;
+            $percentage_all_new_client = ($all_client != 0) ? ($new_client / $all_client) * 100 : 0;
+        } else {
+            $total_client_filter = Client::whereBetween('created_at', [$startDate, $endDate])->count();
+            $total_filter_need_resolve = Request::countRequestNotDone()->whereBetween('created_at', [$startDate, $endDate])->count();
+            $total_filter_solved = Solving::countSolvingDone()->whereBetween('created_at', [$startDate, $endDate])->count();
+            $total_filter_new_client = Client::getNewClient()->whereBetween('created_at', [$startDate, $endDate])->count();
+            $percentage_all_new_client = ($total_client_filter != 0) ? ($total_filter_new_client / $total_client_filter) * 100 : 0;
+        }
 
         return [
-            Stat::make('Total Client', $total_client),
-            Stat::make('Request need resolve', $total_request),
-            Stat::make('Solved', $total_solved),
-            Stat::make('New client', $new_client)
-                ->description(number_format($percentage_new_client, 1) . '% increase')
+            Stat::make('Total Client', $total_client_filter),
+            Stat::make('Request need resolve', $total_filter_need_resolve),
+            Stat::make('Solved', $total_filter_solved),
+            Stat::make('New client', $total_filter_new_client)
+                ->description(number_format($percentage_all_new_client, 1) . '% increase')
                 ->color('success')
                 ->descriptionIcon('heroicon-m-arrow-trending-up'),
         ];
