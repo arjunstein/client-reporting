@@ -22,7 +22,7 @@ class W_MonthlyRequestChart extends ChartWidget
         $data = Trend::model(Request::class)
             ->dateColumn('request_date')
             ->between(
-                start: now()->startOfYear()->subYears(2),
+                start: now()->startOfYear()->subYears(1),
                 end: now()->endOfYear(),
             )
             ->perMonth()

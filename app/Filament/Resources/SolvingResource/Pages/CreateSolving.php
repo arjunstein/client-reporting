@@ -9,4 +9,9 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateSolving extends CreateRecord
 {
     protected static string $resource = SolvingResource::class;
+
+    protected function afterCreate(): void
+    {
+        $this->record->updateStatus();
+    }
 }

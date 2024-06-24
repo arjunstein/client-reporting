@@ -16,9 +16,9 @@ class W_YearlyDevelopedChart extends ChartWidget
 
     public function __construct()
     {
-        $year = \Carbon\Carbon::now()->year;
-        $month = \Carbon\Carbon::now()->format('F');
-        self::$heading = 'Most developed in ' . $month . ' ' . $year;
+        // $year = \Carbon\Carbon::now()->year;
+        // $month = \Carbon\Carbon::now()->format('F');
+        self::$heading = 'Most developed';
     }
 
     protected function getData(): array

@@ -46,4 +46,13 @@ class Solving extends Model
             ->groupBy('developed_id')
             ->get();
     }
+
+    public function updateStatus()
+    {
+        $request = Request::find($this->request_id);
+        if ($request) {
+            $request->status = "Done";
+            $request->save();
+        }
+    }
 }

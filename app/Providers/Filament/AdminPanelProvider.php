@@ -24,10 +24,8 @@ class AdminPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->login()
-            ->registration()
-            ->profile(isSimple: false)
             ->default()
+            ->profile(isSimple: false)
             ->id('admin')
             ->path('admin')
             ->favicon(asset('varnion.ico'))
