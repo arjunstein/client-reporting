@@ -57,16 +57,18 @@ class SolvingResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('client.client_name')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('developed.item_name')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('request.issue')
                     ->label('Issue')
+                    ->limit(50)
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
@@ -76,6 +78,7 @@ class SolvingResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 //
             ])

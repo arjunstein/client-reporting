@@ -55,7 +55,7 @@ class RequestResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('issue')
-                    ->searchable(),
+                    ->searchable()->limit(30),
                 Tables\Columns\TextColumn::make('client.client_name')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status'),
@@ -78,6 +78,7 @@ class RequestResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 //
             ])
