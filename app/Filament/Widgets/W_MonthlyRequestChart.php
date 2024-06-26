@@ -11,19 +11,40 @@ class W_MonthlyRequestChart extends ChartWidget
 {
     protected static ?string $heading;
     protected static string $color = 'success';
+    public ?string $filter = 'year';
 
     public function __construct()
     {
         self::$heading = 'Total request';
     }
 
+    protected function getFilters(): ?array
+    {
+        return [
+            'today' => 'Today',
+            'week' => 'Last week',
+            'month' => 'Last month',
+            'year' => 'Last year',
+        ];
+    }
+
     protected function getData(): array
     {
+        $activeFilter = $this->filter;
+        $start = match ($activeFilter) {
+            'today' => now()->startOfDay(),
+            'week' => now()->startOfWeek(),
+            'month' => now()->startOfMonth(),
+            'year' => now()->startOfYear()->subYear(1),
+            default => now()->startOfYear(),
+        };
+
+        $end = now()->endOfYear();
         $data = Trend::model(Request::class)
             ->dateColumn('request_date')
             ->between(
-                start: now()->startOfYear()->subYears(1),
-                end: now()->endOfYear(),
+                start: $start,
+                end: $end,
             )
             ->perMonth()
             ->count();

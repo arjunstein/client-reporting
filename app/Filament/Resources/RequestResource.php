@@ -57,8 +57,10 @@ class RequestResource extends Resource
                 Tables\Columns\TextColumn::make('issue')
                     ->searchable()->limit(30),
                 Tables\Columns\TextColumn::make('client.client_name')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('status'),
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('status')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('request_date')
                     ->date()
                     ->sortable(),
