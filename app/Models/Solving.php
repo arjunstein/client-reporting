@@ -55,4 +55,17 @@ class Solving extends Model
             $request->save();
         }
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saved(function ($solving) {
+            $request = Request::find($solving->request_id);
+            if ($request) {
+                $request->finish_date = $solving->created_at;
+                $request->save();
+            }
+        });
+    }
 }
