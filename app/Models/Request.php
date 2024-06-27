@@ -30,4 +30,15 @@ class Request extends Model
     {
         return self::where('status', '!=', 'Done')->pluck('issue', 'id');
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (isset($model->request_date)) {
+                $model->created_at = $model->request_date;
+            }
+        });
+    }
 }

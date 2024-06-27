@@ -46,7 +46,6 @@ class RequestResource extends Resource
                 Forms\Components\DatePicker::make('request_date')
                     ->required(),
                 Forms\Components\DatePicker::make('finish_date'),
-                Forms\Components\DatePicker::make('created_at'),
             ]);
     }
 
