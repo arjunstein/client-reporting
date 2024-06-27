@@ -38,7 +38,7 @@ class RequestResource extends Resource
                     ->options([
                         'In Queue' => 'In Queue',
                         'On Process' => 'On Process',
-                        'Wait Client Confirm' => 'Wait Client Confirm',
+                        'Waiting Client Confirm' => 'Waiting Client Confirm',
                         'Done' => 'Done',
                     ])
                     ->native(false)
