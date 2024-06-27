@@ -38,7 +38,7 @@ class RequestResource extends Resource
                     ->options([
                         'In Queue' => 'In Queue',
                         'On Process' => 'On Process',
-                        'Wait Client Confirm' => 'Wait Client Confirm',
+                        'Waiting Client Confirm' => 'Waiting Client Confirm',
                         'Done' => 'Done',
                     ])
                     ->native(false)
@@ -46,7 +46,6 @@ class RequestResource extends Resource
                 Forms\Components\DatePicker::make('request_date')
                     ->required(),
                 Forms\Components\DatePicker::make('finish_date'),
-                Forms\Components\DatePicker::make('created_at'),
             ]);
     }
 
