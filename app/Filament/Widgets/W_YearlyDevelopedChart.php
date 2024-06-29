@@ -13,17 +13,37 @@ use Flowframe\Trend\TrendValue;
 class W_YearlyDevelopedChart extends ChartWidget
 {
     protected static ?string $heading;
+    public ?string $filter = 'year';
 
     public function __construct()
     {
-        // $year = \Carbon\Carbon::now()->year;
-        // $month = \Carbon\Carbon::now()->format('F');
         self::$heading = 'Most developed';
+    }
+
+    public function updateFilter($newFilter)
+    {
+        $this->filter = $newFilter;
+    }
+
+    protected function getFilters(): ?array
+    {
+        return [
+            'month' => 'This month',
+            'year' => 'This year',
+        ];
     }
 
     protected function getData(): array
     {
-        $data = Solving::getAllDevelopedData();
+        $activeFilter = $this->filter;
+        $start = match ($activeFilter) {
+            'month' => now()->startOfMonth(),
+            'year' => now()->startOfYear(),
+            default => now()->startOfYear(),
+        };
+        $end = now()->endOfYear();
+
+        $data = Solving::getAllDevelopedData($start, $end);
         $developedList = DevelopedList::pluck('item_name', 'id');
 
         $labels = [];

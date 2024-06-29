@@ -21,10 +21,8 @@ class W_MonthlyRequestChart extends ChartWidget
     protected function getFilters(): ?array
     {
         return [
-            'today' => 'Today',
-            'week' => 'Last week',
-            'month' => 'Last month',
-            'year' => 'Last year',
+            'month' => 'This Month',
+            'year' => 'This year',
         ];
     }
 
@@ -32,10 +30,8 @@ class W_MonthlyRequestChart extends ChartWidget
     {
         $activeFilter = $this->filter;
         $start = match ($activeFilter) {
-            'today' => now()->startOfDay(),
-            'week' => now()->startOfWeek(),
             'month' => now()->startOfMonth(),
-            'year' => now()->startOfYear()->subYear(1),
+            'year' => now()->startOfYear(),
             default => now()->startOfYear(),
         };
 
