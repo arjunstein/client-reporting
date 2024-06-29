@@ -36,13 +36,13 @@ class Solving extends Model
         return self::query();
     }
 
-    public static function getAllDevelopedData(): Collection
+    public static function getAllDevelopedData($start, $end): Collection
     {
         return self::select(
             'developed_id',
             DB::raw('count(*) as count')
         )
-            ->whereYear('created_at', now()->year)
+            ->whereBetween('created_at', [$start, $end])
             ->groupBy('developed_id')
             ->get();
     }
