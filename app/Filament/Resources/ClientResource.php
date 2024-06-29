@@ -3,16 +3,17 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ClientResource\Pages;
-use App\Filament\Resources\ClientResource\RelationManagers;
 use App\Models\Client;
 use App\Models\Interfacing;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Filament\Forms\Components\DatePicker;
+use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ClientResource extends Resource
 {
@@ -80,7 +81,28 @@ class ClientResource extends Resource
             ])
             ->defaultSort('created_at', 'asc')
             ->filters([
-                //
+                SelectFilter::make('is_client_new')
+                    ->label('New Client')
+                    ->options([
+                        0 => 'Existing Client',
+                        1 => 'New Client',
+                    ]),
+                Filter::make('created_at')
+                    ->form([
+                        DatePicker::make('created_from'),
+                        DatePicker::make('created_until'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['created_from'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                            )
+                            ->when(
+                                $data['created_until'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                            );
+                    })
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
