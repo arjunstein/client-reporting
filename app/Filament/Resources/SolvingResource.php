@@ -62,12 +62,15 @@ class SolvingResource extends Resource
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('developed.item_name')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('request.issue')
                     ->label('Issue')
+                    ->searchable()
                     ->limit(50)
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->searchable()
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: false),

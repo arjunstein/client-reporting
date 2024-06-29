@@ -28,4 +28,9 @@ class Client extends Model
         $requestsNotDone = Request::where('status', '!=', 'Done')->pluck('client_id');
         return self::whereIn('id', $requestsNotDone)->pluck('client_name', 'id');
     }
+
+    public function getIsClientNewTextAttribute()
+    {
+        return $this->is_client_new ? 'Yes' : 'No';
+    }
 }
