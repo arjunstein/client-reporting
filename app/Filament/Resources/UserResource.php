@@ -32,8 +32,9 @@ class UserResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('password')
                     ->password()
-                    ->required(fn ($livewire) => $livewire instanceof Pages\CreateUser)
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->dehydrateStateUsing(fn ($state) => filled($state) ? bcrypt($state) : null)
+                    ->required(fn ($livewire) => $livewire instanceof Pages\CreateUser),
                 Forms\Components\Select::make('roles')
                     ->relationship('roles', 'name')
                     ->required()
