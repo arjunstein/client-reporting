@@ -37,6 +37,8 @@ class ClientResource extends Resource
                     ->maxLength(255),
                 Forms\Components\Toggle::make('is_client_new')
                     ->label('Is new client?'),
+                Forms\Components\Toggle::make('is_cloud_server')
+                    ->label('Is cloud server?'),
                 Forms\Components\Select::make('interfacing_id')
                     ->label('Interfacing')
                     ->relationship('interfacing', 'interfacing_name')
@@ -53,10 +55,18 @@ class ClientResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('client_name')
                     ->label('Client')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\IconColumn::make('is_cloud_server')
+                    ->label('Server type')
+                    ->boolean()
+                    ->sortable()
+                    ->trueIcon('heroicon-o-cloud')
+                    ->falseIcon('heroicon-o-server-stack'),
                 Tables\Columns\IconColumn::make('is_client_new')
                     ->label('New Client')
-                    ->boolean(),
+                    ->boolean()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('ip_server')
                     ->label('IP Server')
                     ->searchable()
@@ -86,6 +96,12 @@ class ClientResource extends Resource
                     ->options([
                         0 => 'Existing Client',
                         1 => 'New Client',
+                    ]),
+                SelectFilter::make('is_cloud_server')
+                    ->label('Server type')
+                    ->options([
+                        0 => 'On premise',
+                        1 => 'Cloud',
                     ]),
                 Filter::make('created_at')
                     ->form([
