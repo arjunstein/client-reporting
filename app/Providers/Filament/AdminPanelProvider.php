@@ -25,7 +25,6 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
-            ->profile(isSimple: false)
             ->id('admin')
             ->path('admin')
             ->favicon(asset('varnion.ico'))
