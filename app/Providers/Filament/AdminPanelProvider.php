@@ -29,6 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->favicon(asset('varnion.ico'))
             ->login()
+            ->profile(isSimple: false)
             ->colors([
                 'danger' => Color::Rose,
             ])
