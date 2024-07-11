@@ -33,8 +33,7 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('password')
                     ->password()
                     ->maxLength(255)
-                    ->dehydrateStateUsing(fn ($state) => filled($state) ? bcrypt($state) : null)
-                    ->required(fn ($livewire) => $livewire instanceof Pages\CreateUser),
+                    ->required(fn ($record) => $record === null),
                 Forms\Components\Select::make('roles')
                     ->relationship('roles', 'name')
                     ->required()
@@ -67,6 +66,7 @@ class UserResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
