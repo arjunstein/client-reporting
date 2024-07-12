@@ -20,3 +20,7 @@ Route::get('/', function () {
 Route::get('/login', function () {
     return redirect(route('filament.admin.auth.login'));
 })->name('login');
+
+Route::get('/admin/logout', function () {
+    return redirect(route('filament.admin.auth.login'));
+});
