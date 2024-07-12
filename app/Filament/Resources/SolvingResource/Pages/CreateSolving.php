@@ -3,7 +3,8 @@
 namespace App\Filament\Resources\SolvingResource\Pages;
 
 use App\Filament\Resources\SolvingResource;
-use Filament\Actions;
+use App\Models\User;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateSolving extends CreateRecord
@@ -13,5 +14,20 @@ class CreateSolving extends CreateRecord
     protected function afterCreate(): void
     {
         $this->record->updateStatus();
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
+
+    protected function getCreatedNotification(): ?Notification
+    {
+        $recipient = User::all();
+        return Notification::make()
+            ->success()
+            ->title('Solved')
+            ->body('The request has been solved successfully.')
+            ->sendToDatabase($recipient);
     }
 }
