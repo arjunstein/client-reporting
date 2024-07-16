@@ -28,6 +28,13 @@ class LatestRequests extends BaseWidget
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'In Queue' => 'danger',
+                        'On Process' => 'warning',
+                        'Waiting Client Confirm' => 'secondary',
+                        'Done' => 'success',
+                    })
                     ->searchable(),
                 Tables\Columns\TextColumn::make('request_date')
                     ->date()

@@ -22,8 +22,8 @@ class CreateRequest extends CreateRecord
 
         return Notification::make()
             ->success()
-            ->title('Request created')
-            ->body('The request has been created successfully.')
+            ->title('New request created')
+            ->body('The new request has been created.')
             ->sendToDatabase($recipient);
     }
 }
