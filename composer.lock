@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5eb0bf51b0010943d31f78d0e1bdfdfe",
+    "content-hash": "889262ca2b49ec5602585c6e254a96a1",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -9042,6 +9042,63 @@
                 }
             ],
             "time": "2024-04-24T06:32:35+00:00"
+        },
+        {
+            "name": "revolution/sail-db-backup",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kawax/sail-db-backup.git",
+                "reference": "c4dd915ca5b6cf6c9f58a0ded207fc9d6ca0337b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kawax/sail-db-backup/zipball/c4dd915ca5b6cf6c9f58a0ded207fc9d6ca0337b",
+                "reference": "c4dd915ca5b6cf6c9f58a0ded207fc9d6ca0337b",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^10.0||^11.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^8.0||^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Revolution\\Sail\\Backup\\SailBackupServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Revolution\\Sail\\Backup\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "kawax",
+                    "email": "kawaxbiz@gmail.com"
+                }
+            ],
+            "description": "Backup Sail's Database",
+            "keywords": [
+                "backup",
+                "database",
+                "laravel",
+                "sail"
+            ],
+            "support": {
+                "issues": "https://github.com/kawax/sail-db-backup/issues",
+                "source": "https://github.com/kawax/sail-db-backup/tree/3.0.0"
+            },
+            "time": "2024-03-29T06:24:27+00:00"
         },
         {
             "name": "sebastian/cli-parser",
