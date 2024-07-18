@@ -63,7 +63,7 @@ class RequestResource extends Resource
                     ->color(fn (string $state): string => match ($state) {
                         'In Queue' => 'danger',
                         'On Process' => 'warning',
-                        'Waiting Client Confirm' => 'secondary',
+                        'Waiting Client Confirm' => 'info',
                         'Done' => 'success',
                     })
                     ->searchable(),
