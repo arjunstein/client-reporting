@@ -43,9 +43,9 @@ class RequestResource extends Resource
                     ])
                     ->native(false)
                     ->required(),
-                Forms\Components\DatePicker::make('request_date')
+                Forms\Components\DateTimePicker::make('request_date')
                     ->required(),
-                Forms\Components\DatePicker::make('finish_date'),
+                Forms\Components\DateTimePicker::make('finish_date'),
             ]);
     }
 
