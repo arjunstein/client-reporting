@@ -47,7 +47,7 @@ class SolvingResource extends Resource
                     ->options(Request::all()->whereNotIn('status', 'Done')->pluck('issue', 'id'))
                     ->searchable()
                     ->required(),
-                Forms\Components\DateTimePicker::make('created_at')
+                Forms\Components\DatePicker::make('created_at')
                     ->label('Finish Date'),
                 Forms\Components\Textarea::make('resolving')
                     ->label('How to resolve')
