@@ -13,7 +13,7 @@ use Flowframe\Trend\TrendValue;
 class W_YearlyDevelopedChart extends ChartWidget
 {
     protected static ?string $heading;
-    public ?string $filter = 'year';
+    public ?string $filter = 'month';
 
     public function __construct()
     {
@@ -28,8 +28,8 @@ class W_YearlyDevelopedChart extends ChartWidget
     protected function getFilters(): ?array
     {
         return [
-            'month' => 'This month',
-            'year' => 'This year',
+            'month' => date('F Y'),
+            'year' => 'Total in ' . date('Y'),
         ];
     }
 
