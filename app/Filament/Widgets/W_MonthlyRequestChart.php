@@ -11,7 +11,7 @@ class W_MonthlyRequestChart extends ChartWidget
 {
     protected static ?string $heading;
     protected static string $color = 'success';
-    public ?string $filter = 'year';
+    public ?string $filter = 'month';
 
     public function __construct()
     {
@@ -21,8 +21,8 @@ class W_MonthlyRequestChart extends ChartWidget
     protected function getFilters(): ?array
     {
         return [
-            'month' => 'This Month',
-            'year' => 'This year',
+            'month' => date('F Y'),
+            'year' => 'Total in ' . date('Y'),
         ];
     }
 
@@ -32,18 +32,24 @@ class W_MonthlyRequestChart extends ChartWidget
         $start = match ($activeFilter) {
             'month' => now()->startOfMonth(),
             'year' => now()->startOfYear(),
-            default => now()->startOfYear(),
         };
 
-        $end = now()->endOfYear();
-        $data = Trend::model(Request::class)
+        $end = match ($activeFilter) {
+            'month' => now()->endOfMonth(),
+            'year' => now()->endOfYear(),
+        };
+
+        $trend = Trend::model(Request::class)
             ->dateColumn('request_date')
             ->between(
                 start: $start,
                 end: $end,
-            )
-            ->perMonth()
-            ->count();
+            );
+
+        $data = match ($activeFilter) {
+            'month' => $trend->perDay()->count(),
+            'year' => $trend->perMonth()->count(),
+        };
 
         return [
             'datasets' => [
