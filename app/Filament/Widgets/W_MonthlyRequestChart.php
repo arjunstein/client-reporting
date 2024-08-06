@@ -35,8 +35,8 @@ class W_MonthlyRequestChart extends ChartWidget
         };
 
         $end = match ($activeFilter) {
-            'month' => now()->endOfMonth(),
-            'year' => now()->endOfYear(),
+            'month' => now(),
+            'year' => now(),
         };
 
         $trend = Trend::model(Request::class)
