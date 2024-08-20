@@ -22,6 +22,6 @@ class EditRequest extends EditRecord
         return Notification::make()
             ->success()
             ->title('Edited')
-            ->body("Updated request client {$requestCreated->client->client_name}");
+            ->body("Updated request client {$requestCreated->client->client_name} Issue: {$requestCreated->issue}");
     }
 }
