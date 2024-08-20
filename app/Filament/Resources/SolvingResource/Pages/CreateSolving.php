@@ -24,10 +24,12 @@ class CreateSolving extends CreateRecord
     protected function getCreatedNotification(): ?Notification
     {
         $recipient = User::all();
+        $solving = $this->record;
+
         return Notification::make()
             ->success()
             ->title('Solved')
-            ->body('The request has been solved successfully.')
+            ->body("Request: '{$solving->request->issue}' Client: '{$solving->client->client_name}' has been solved successfully.")
             ->sendToDatabase($recipient);
     }
 }

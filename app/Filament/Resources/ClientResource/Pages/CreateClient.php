@@ -17,9 +17,11 @@ class CreateClient extends CreateRecord
 
     protected function getCreatedNotification(): ?Notification
     {
+        $clientCreated = $this->record;
+
         return Notification::make()
             ->success()
-            ->title('Client created')
-            ->body('The client has been created successfully.');
+            ->title('Success')
+            ->body("Client {$clientCreated->client_name} has been created");
     }
 }

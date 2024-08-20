@@ -17,9 +17,11 @@ class CreateInterfacing extends CreateRecord
 
     protected function getCreatedNotification(): ?Notification
     {
+        $interfacing = $this->record;
+
         return Notification::make()
             ->success()
-            ->title('Interfacing created')
-            ->body('The interfacing has been created successfully.');
+            ->title('Success')
+            ->body("Interfacing {$interfacing->interfacing_name} has been created");
     }
 }

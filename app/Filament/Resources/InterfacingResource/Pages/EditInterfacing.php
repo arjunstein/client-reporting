@@ -17,9 +17,11 @@ class EditInterfacing extends EditRecord
 
     protected function getSavedNotification(): ?Notification
     {
+        $interfacing = $this->record;
+
         return Notification::make()
             ->success()
-            ->title('Interfacing updated')
-            ->body('The interfacing has been updated successfully.');
+            ->title('Edited')
+            ->body("Interfacing {$interfacing->interfacing_name} has been updated");
     }
 }

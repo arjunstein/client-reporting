@@ -19,11 +19,12 @@ class CreateRequest extends CreateRecord
     protected function getCreatedNotification(): ?Notification
     {
         $recipient = User::all();
+        $requestCreated = $this->record;
 
         return Notification::make()
             ->success()
-            ->title('New request created')
-            ->body('The new request has been created.')
+            ->title('Created')
+            ->body("New request client {$requestCreated->client->client_name}")
             ->sendToDatabase($recipient);
     }
 }

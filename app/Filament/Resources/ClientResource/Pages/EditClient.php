@@ -17,9 +17,11 @@ class EditClient extends EditRecord
 
     protected function getSavedNotification(): ?Notification
     {
+        $clientUpdated = $this->record;
+
         return Notification::make()
             ->success()
-            ->title('Client updated')
-            ->body('The client has been updated successfully.');
+            ->title('Edited')
+            ->body("Client {$clientUpdated->client_name} has been updated");
     }
 }
