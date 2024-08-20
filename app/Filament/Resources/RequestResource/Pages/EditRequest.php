@@ -17,9 +17,11 @@ class EditRequest extends EditRecord
 
     protected function getSavedNotification(): ?Notification
     {
+        $requestCreated = $this->record;
+
         return Notification::make()
             ->success()
-            ->title('Request updated')
-            ->body('The request has been updated successfully.');
+            ->title('Edited')
+            ->body("Updated request client {$requestCreated->client->client_name}");
     }
 }

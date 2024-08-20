@@ -17,9 +17,11 @@ class CreateDevelopedList extends CreateRecord
 
     protected function getCreatedNotification(): ?Notification
     {
+        $developedList = $this->record;
+
         return Notification::make()
             ->success()
-            ->title('Developed list created')
-            ->body('The developed list has been created successfully.');
+            ->title('Success')
+            ->body("{$developedList->item_name} has been created");
     }
 }

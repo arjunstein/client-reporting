@@ -17,9 +17,11 @@ class EditDevelopedList extends EditRecord
 
     protected function getSavedNotification(): ?Notification
     {
+        $developedList = $this->record;
+
         return Notification::make()
             ->success()
-            ->title('Developed list updated')
-            ->body('The developed list has been updated successfully.');
+            ->title('Edited')
+            ->body("{$developedList->item_name} has been updated");
     }
 }

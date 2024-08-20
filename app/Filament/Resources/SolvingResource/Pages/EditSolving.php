@@ -17,9 +17,11 @@ class EditSolving extends EditRecord
 
     protected function getSavedNotification(): ?Notification
     {
+        $solving = $this->record;
+
         return Notification::make()
             ->success()
-            ->title('Solve updated')
-            ->body('The request solve has been updated successfully.');
+            ->title('Edited')
+            ->body("Request: '{$solving->request->issue}' Client: '{$solving->client->client_name}' has been updated.");
     }
 }

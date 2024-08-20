@@ -40,5 +40,11 @@ class Request extends Model
                 $model->created_at = $model->request_date;
             }
         });
+
+        static::updating(function ($model) {
+            if (isset($model->request_date)) {
+                $model->created_at = $model->request_date;
+            }
+        });
     }
 }

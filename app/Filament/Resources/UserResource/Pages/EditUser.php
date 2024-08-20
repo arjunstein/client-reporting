@@ -17,9 +17,11 @@ class EditUser extends EditRecord
 
     protected function getSavedNotification(): ?Notification
     {
+        $user = $this->record;
+
         return Notification::make()
             ->success()
-            ->title('User updated')
-            ->body('The user has been updated successfully.');
+            ->title('Edited')
+            ->body("User '{$user->name}' has been updated successfully.");
     }
 }

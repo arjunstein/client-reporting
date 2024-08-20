@@ -17,9 +17,11 @@ class CreateUser extends CreateRecord
 
     protected function getCreatedNotification(): ?Notification
     {
+        $user = $this->record;
+
         return Notification::make()
             ->success()
-            ->title('User created')
-            ->body('The user has been created successfully.');
+            ->title('Created')
+            ->body("User '{$user->name}' has been created successfully.");
     }
 }
