@@ -29,7 +29,7 @@ class CreateSolving extends CreateRecord
         return Notification::make()
             ->success()
             ->title('Solved')
-            ->body("Request: '{$solving->request->issue}' Client: '{$solving->client->client_name}' has been solved successfully.")
+            ->body("Request: {$solving->request->issue}, Client: {$solving->client->client_name} has been solved successfully.")
             ->sendToDatabase($recipient);
     }
 }

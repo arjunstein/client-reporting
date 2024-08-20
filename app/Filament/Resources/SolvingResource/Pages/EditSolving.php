@@ -22,6 +22,6 @@ class EditSolving extends EditRecord
         return Notification::make()
             ->success()
             ->title('Edited')
-            ->body("Request: '{$solving->request->issue}' Client: '{$solving->client->client_name}' has been updated.");
+            ->body("Request: {$solving->request->issue}, Client: {$solving->client->client_name} has been updated.");
     }
 }
