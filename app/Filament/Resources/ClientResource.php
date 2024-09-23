@@ -31,19 +31,23 @@ class ClientResource extends Resource
                     ->label('Client')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('os_server')
+                    ->label('OS Server')
+                    ->required()
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('ip_server')
                     ->label('IP Server')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Toggle::make('is_client_new')
-                    ->label('Is new client?'),
-                Forms\Components\Toggle::make('is_cloud_server')
-                    ->label('Is cloud server?'),
                 Forms\Components\Select::make('interfacing_id')
                     ->label('Interfacing')
                     ->relationship('interfacing', 'interfacing_name')
                     ->options(Interfacing::all()->pluck('interfacing_name', 'id'))
                     ->required(),
+                Forms\Components\Toggle::make('is_client_new')
+                    ->label('Is new client?'),
+                Forms\Components\Toggle::make('is_cloud_server')
+                    ->label('Is cloud server?'),
                 Forms\Components\DateTimePicker::make('created_at')
                     ->label('Created At')
             ]);
@@ -69,6 +73,10 @@ class ClientResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('ip_server')
                     ->label('IP Server')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('os_server')
+                    ->label('OS Server')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('interfacing.interfacing_name')
@@ -112,11 +120,11 @@ class ClientResource extends Resource
                         return $query
                             ->when(
                                 $data['created_from'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
                             )
                             ->when(
                                 $data['created_until'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
                             );
                     })
             ])
