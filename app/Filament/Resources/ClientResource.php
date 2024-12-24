@@ -49,7 +49,9 @@ class ClientResource extends Resource
                 Forms\Components\Toggle::make('is_cloud_server')
                     ->label('Is cloud server?'),
                 Forms\Components\DateTimePicker::make('created_at')
-                    ->label('Created At')
+                    ->label('Created At'),
+                Forms\Components\Textarea::make('interface_notes')
+                    ->label('Interface Notes'),
             ]);
     }
 
